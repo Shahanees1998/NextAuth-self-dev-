@@ -1,20 +1,50 @@
-import '../styles/globals.css'
-import Head from 'next/head'
-import { Provider } from 'next-auth/client'
+import { SessionProvider } from "next-auth/react"
+import Layout from "../components/Layout"
+import React from "react"
+import PropTypes from "prop-types"
+import Head from "next/head"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
+import CssBaseline from "@mui/material//CssBaseline"
+import theme from "../theme"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
-function MyApp({ Component, pageProps }) {
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  React.useEffect(() => {
+    const jssStyles = document.querySelector("#jss-server-side")
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
+  // const theme = createTheme()
+
   return (
-    <Provider>
-      <Head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous" />
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossOrigin="anonymous"></script>
-      </Head>
-      
-      <div className="container">
-        <Component {...pageProps} />
-      </div>
-    </Provider>
+     <React.Fragment>
+       <Head>
+         <title>My page </title>
+         <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+       </Head>
+       <ThemeProvider theme={theme}>
+         <SessionProvider session={session}>
+           <Layout>
+             <ToastContainer />
+             <Component {...pageProps} />
+           </Layout>
+         </SessionProvider>
+         <CssBaseline />
+       </ThemeProvider>
+     </React.Fragment>
   )
+}
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
 }
 
 export default MyApp

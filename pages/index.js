@@ -1,13 +1,13 @@
-import React from 'react'
-import { signOut } from 'next-auth/client'
+import { useSession, signIn, signOut } from "next-auth/react"
 
-const Home = () => {
+export default function Component() {
+
+
   return (
-    <div>
-      Home
-      <button onClick={() => signOut()}>signOut</button>
-    </div>
+     <>
+       <h1>Home ssssssssssss </h1>
+      {/* Not signed in  <br />
+       <button onClick={() => signIn("google")}>Sign in </button> */}
+     </>
   )
 }
-
-export default Home
