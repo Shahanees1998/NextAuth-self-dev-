@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
+import FlightLogo from '../../../asssets/FlightLogo.png'
+import Image from 'next/image'
 
 const theme = createTheme()
 
@@ -54,7 +56,7 @@ export default function Forget() {
             alignItems: "center",
           }}
         >
-          
+  
            <Box
             component="form"
             onSubmit={handleSubmit}
