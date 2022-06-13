@@ -24,6 +24,7 @@ export default async (req, res) => {
       }).save()
 
     console.log(newProduct)
+    res.status(201).json({message : 'product added succefully'})
     }
   } catch (error) {
     console.log(error)

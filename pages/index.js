@@ -11,7 +11,7 @@ import Products from '../model/productModel'
 export default function HomePage(props) {
   const [loadedMeetups, setLoadedMeetups] = useState([]);
 const router = useRouter()
-console.log(props)
+//console.log(props)
   useEffect(() => {
     //send HTTP request to fetch meetups from backedn
  //   setLoadedMeetups(DUMMY_MEETUPS);
@@ -23,7 +23,7 @@ if(!props.meet)
   )
 }
 else {
-  return <MeetupList title = {props.meet.title} price = {props.meet.price} owner = {props.meet.owner}/>;
+  return <MeetupList meetups = {props.meet}/>;
 
 }
 }
@@ -52,15 +52,18 @@ export async function getStaticProps() {
   //console.log(meetupCollection)
   const meetups1 = await meetupCollection.find().toArray();
   const meet = JSON.stringify(meetups1)
-  console.log(meetups1)
+ // console.log(meetups1)
   //client.close();
   return {
     props: {
-   meet:{
-     title: JSON.stringify(meetups1[0].title),
-     price: JSON.stringify(meetups1[0].price),
-     owner: JSON.stringify(meetups1[0].owner)
-   }
+   meet: meetups1.map ((item) => ({
+    id : JSON.stringify(item._id),
+    title: JSON.stringify(item.title),
+    price: JSON.stringify(item.price),
+    owner: JSON.stringify(item.owner)
+   }))
+    
+   
    
     },
     revalidate: 10,

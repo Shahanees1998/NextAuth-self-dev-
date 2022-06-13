@@ -30,9 +30,9 @@ export default function ButtonAppBar() {
     ? session?.user
     : ""
 
-  console.log(userState)
+  //console.log(userState)
   useEffect(() => {
-    console.log('setting user state')
+    //console.log('setting user state')
 
      setUserState(user)
   }, [router, setUserState])
@@ -40,7 +40,7 @@ export default function ButtonAppBar() {
 //console.log(router)
   useEffect(() => {
     if (user) {
-      console.log('user is there')
+      //console.log('user is there')
       setisLoggedIn(true)
     }
     if (!user) {
@@ -50,7 +50,7 @@ export default function ButtonAppBar() {
 
       }
       else {
-        console.log(router.pathname)
+        //console.log(router.pathname)
 
         router.push("/src/user/login")
       }

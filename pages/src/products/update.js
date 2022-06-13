@@ -1,11 +1,18 @@
-import { useRef } from 'react';
+import { useRef,useEffect } from 'react';
 import { toast } from "react-toastify"
 import axios from "axios"
 import { useRouter } from 'next/router';
 //import Card from '../ui/Card';
 import classes from '../../../components/NewMeetupForm.module.css';
+import { withRouter } from 'next/router'
 
-function NewMeetupForm(props) {
+function Update(props) {
+ // console.log(props.id)
+  
+  useEffect(() => {
+    // Update the document title using the browser API
+   //console.log(props.router.query.name)
+  });
   const router = useRouter()
   const titleInputRef = useRef();
   const priceInputRef = useRef();
@@ -16,6 +23,7 @@ function NewMeetupForm(props) {
     const enteredTitle = titleInputRef.current.value;
     const enteredPrice = priceInputRef.current.value;
     const enteredOwner = ownerInputRef.current.value;
+    const id =props.router.query.id
 
     try {
       const config = {
@@ -23,15 +31,15 @@ function NewMeetupForm(props) {
           "Content-Type": "application/json",
         },
       }
-
-      const { data } = await axios.post(
-        `/api/newproducts/products`,
-        { enteredTitle, enteredPrice, enteredOwner },
+console.log('api calling')
+      const { data } = await axios.put(
+        `/api/newproducts/Update`,
+        { id,enteredTitle, enteredPrice, enteredOwner },
         config
       )
 
       toast.success(data.message)
-   router.push('/')
+   //router.push('/')
     } catch (error) {
       console.log(error)
     }
@@ -56,11 +64,11 @@ function NewMeetupForm(props) {
        
         </div>
         <div className={classes.actions}>
-          <button>Add Meetup</button>
+          <button type='submit'>updaet Meetup</button>
         </div>
       </form>
     </div>
   );
 }
 
-export default NewMeetupForm;
+export default withRouter(Update);
